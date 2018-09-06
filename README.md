@@ -1,6 +1,10 @@
 # rstrings
 ## Overview
-Functions for working with strings in R. Easier binding when searching for multiple terms with `search_binder()`. Easier replacement of multiple values with `str_replacer()`. 
+Functions for working with strings in R. 
+
+* Easier binding when searching for multiple terms with `search_binder()`
+* Easier replacement of multiple values with `str_replacer()`
+* Parse structured text into sentences with `split_into_sentences()`
 
 ## Installation
 ``` r
@@ -10,8 +14,9 @@ devtools::install_github("sbha/rstrings")
 
 ## Usage
 ```r
-# The default is to bind search terms on both sides: 
 library(rstrings)
+
+# The default is to bind search terms on both sides: 
 sample_terms = c('sample', 'words')
 search_binder(sample_terms)
 #> "\\b(sample|words)\\b"
