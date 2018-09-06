@@ -24,7 +24,7 @@ search_binder(sample_terms, side = 'trailing')
 # right bind can be set by side = 'trailing', 'right', or 'r'
 # no binding can be set by side = 'none'
 
-# The input can a column from a data frame:
+# The input can be a column from a data frame:
 search_binder(unique(iris$Species))
 #> "\\b(setosa|versicolor|virginica)\\b"
 
@@ -32,9 +32,8 @@ search_binder(unique(iris$Species))
 search_binder(list(sample_terms))
 #> "\\b(sample|words)\\b"
 
-# search_bind is meant to be used in function calls like a grepl() or stringr::str_detect():
+# search_binder is meant to be used in function calls like a grepl() or stringr::str_detect():
 grepl(search_binder(sample_terms), target_text)
-
 stringr::str_detect(target_text, search_binder(sample_terms))
 
 
@@ -45,7 +44,7 @@ replace_with = c('Monday', 'January')
 str_replacer(test_string, to_replace, replace_with)
 #> "Jane was born last month on Monday January 1st"
 
-# str_replacer() works well with a data frame that can serve as a replacement key table:
+# str_replacer() works well with a data frame that can serve as a replacement key table with a column of strings that are to be replaced and a column of strings that will be the replacements:
 df <- data.frame(to_replace = to_replace,
                  replace_with = replace_with, stringsAsFactors = FALSE)
 str_replacer(test_string, df$to_replace, df$replace_with)
