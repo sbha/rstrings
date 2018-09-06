@@ -1,6 +1,6 @@
 # rstrings
 ## Overview
-Functions for working with strings in R
+Functions for working with strings in R. Easier binding when searching for multiple terms with `search_binder()`. Easier replacement of multiple values with `str_replacer()`. 
 
 ## Installation
 ``` r
@@ -44,7 +44,8 @@ replace_with = c('Monday', 'January')
 str_replacer(test_string, to_replace, replace_with)
 #> "Jane was born last month on Monday January 1st"
 
-# str_replacer() works well with a data frame that can serve as a replacement key table with a column of strings that are to be replaced and a column of strings that will be the replacements:
+# str_replacer() works well with a data frame that can serve as a replacement key table with a column 
+# of strings that are to be replaced and a column of strings that will be the replacements:
 df <- data.frame(to_replace = to_replace,
                  replace_with = replace_with, stringsAsFactors = FALSE)
 str_replacer(test_string, df$to_replace, df$replace_with)
