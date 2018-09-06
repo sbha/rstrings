@@ -38,19 +38,17 @@ grepl(search_binder(sample_terms), target_text)
 stringr::str_detect(target_text, search_binder(sample_terms))
 
 
+# str_replacer() takes target strings and replaces them with corresponding values
+test_string <- 'Jane was born last month on mon jan 1st'
+to_replace = c('mon', 'jan')
+replace_with = c('Monday', 'January')
+str_replacer(test_string, to_replace, replace_with)
+#> "Jane was born last month on Monday January 1st"
+
+# str_replacer() works well with a data frame that can serve as a replacement key table:
+df <- data.frame(to_replace = to_replace,
+                 replace_with = replace_with, stringsAsFactors = FALSE)
+str_replacer(test_string, df$to_replace, df$replace_with)
+#> "Jane was born last month on Monday January 1st"
 
 ```
-
-
-search_binder(c('sample', 'words'))
-
-
-
-test_string <- 'today is mon jan 1'
-
-str_replacer(test_string, c('mon', 'jan'), c('Monday', 'January'))
-
-df <- data_frame(to_replace = c('mon', 'jan'),
-                 replace_wwith = rw)
-
-str_replacer(test_string, df$to_place, df$replace_with)
