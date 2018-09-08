@@ -56,4 +56,22 @@ df <- data.frame(to_replace = to_replace,
 str_replacer(test_string, df$to_replace, df$replace_with)
 #> "Jane was born last month on Monday January 1st"
 
+
+# split_into_sentences() can parse structured text into individual sentences:
+test_text <- 'Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years. He earned $2.5 million when it sold! Now he works at www.website.com.'
+sentences <- split_into_sentences(test_text)
+sentences$sentence
+#> [1] "Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years."
+#> [2] "He earned $2.5 million when it sold!"                         
+#> [3] "Now he works at www.website.com." 
+
+# with dplyr::bind_row() the output can be converted into a dataframe:
+df_sentences <- dplyr::bind_rows(sentences) 
+#> # A tibble: 3 x 1
+#>   sentence                                                     
+#>   <chr>                                                        
+#> 1 Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years.
+#> 2 He earned $2.5 million when it sold!                         
+#> 3 Now he works at www.website.com. 
+
 ```
