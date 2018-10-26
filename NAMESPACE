@@ -1,3 +1,4 @@
 export(search_binder)
 export(split_into_sentences)
 export(str_replacer)
+export(search_scripts)

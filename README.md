@@ -5,6 +5,7 @@ Functions for working with strings in R.
 * Easier binding when searching for multiple terms with `search_binder()`
 * Easier replacement of multiple values with `str_replacer()`
 * Parse structured text into sentences with `split_into_sentences()`
+* Search R scripts for a string with `search_scripts()`
 
 ## Installation
 ``` r
@@ -37,7 +38,7 @@ search_binder(unique(iris$Species))
 search_binder(list(sample_terms))
 #> "\\b(sample|words)\\b"
 
-# search_binder is meant to be used in function calls like a grepl() or stringr::str_detect():
+# search_binder() is meant to be used in function calls like a grepl() or stringr::str_detect():
 grepl(search_binder(sample_terms), target_text)
 stringr::str_detect(target_text, search_binder(sample_terms))
 
@@ -65,7 +66,7 @@ sentences$sentence
 #> [2] "He earned $2.5 million when it sold!"                         
 #> [3] "Now he works at www.website.com." 
 
-# with dplyr::bind_row() the output can be converted into a dataframe:
+# with dplyr::bind_rows() the output from split_into_sentences() can easily be converted into a dataframe:
 df_sentences <- dplyr::bind_rows(sentences) 
 #> # A tibble: 3 x 1
 #>   sentence                                                     

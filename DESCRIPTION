@@ -2,8 +2,8 @@ Package: rstrings
 Type: Package
 Title: Functions for working with strings
 Version: 0.1.0
-Author: Stu Harty
-Maintainer: Stu harty <sbharty@gmail.com>
+Author: S. Barfield Harty
+Maintainer: S. Barfield Harty <sbharty@gmail.com>
 Description: Functions for working with strings.
 License: First Amendment
 Encoding: UTF-8
