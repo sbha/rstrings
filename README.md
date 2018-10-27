@@ -18,17 +18,17 @@ devtools::install_github("sbha/rstrings")
 library(rstrings)
 
 # search_binder() is meant to be used in function calls like a grepl() or stringr::str_detect():
+sample_terms = c('multiple', 'sample', 'search', 'terms')
 grepl(search_binder(sample_terms), target_text)
 stringr::str_detect(target_text, search_binder(sample_terms))
 
 # The default is to bind search terms on both sides: 
-sample_terms = c('sample', 'words')
 search_binder(sample_terms)
-#> "\\b(sample|words)\\b"
+#> "\\b(multiple|sample|search|terms)\\b"
 
 # The side to bind search terms can be set with side: 
 search_binder(sample_terms, side = 'trailing')
-#> "(sample|words)\\b"
+#> "(multiple|sample|search|terms)\\b"
 
 # left bind can be set by side = 'leading', 'lead', 'left', or 'l'
 # right bind can be set by side = 'trailing', 'right', or 'r'
