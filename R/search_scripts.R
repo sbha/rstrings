@@ -10,25 +10,26 @@
 #'
 #' @export search_scripts
 
-search_scripts <- function(dir_path, file_name, search_string){
-  read_file <- function(dir_path, file_name){
-    con=file(paste0(dir_path, file_name),open="r")
+search_scripts <- function(file_name, search_string){
+  read_file <- function(file_name){
+    con <- file(file_name, open="r")
     on.exit(close(con))
     # warn is included because some scripts do not end with an EOL character 
     readLines(con, warn = FALSE)
   }
   
-  check_string <- function(dir_path, file_name, search_string){
-    file <- read_file(dir_path, file_name)
+  check_string <- function(file_name, search_string){
+    file <- read_file(file_name)
     cnt <- length(grep(search_string, file))
+    dir_path <- gsub('(^.+/)(.+\\.R$)', '\\1', file_name)
+    file_name <- gsub('(^.+/)(.+\\.R$)', '\\2', file_name)
     df <- data.frame(directory = dir_path, file_name = file_name, pattern_count = cnt, stringsAsFactors = FALSE)
     df
   }
   
-  df <- check_string(dir_path, file_name, search_string)
+  df <- check_string(file_name, search_string)
   
-  df
+  return(df)
 }
-
 
 
