@@ -17,6 +17,10 @@ devtools::install_github("sbha/rstrings")
 ```r
 library(rstrings)
 
+# search_binder() is meant to be used in function calls like a grepl() or stringr::str_detect():
+grepl(search_binder(sample_terms), target_text)
+stringr::str_detect(target_text, search_binder(sample_terms))
+
 # The default is to bind search terms on both sides: 
 sample_terms = c('sample', 'words')
 search_binder(sample_terms)
@@ -37,10 +41,6 @@ search_binder(unique(iris$Species))
 # Or a list:
 search_binder(list(sample_terms))
 #> "\\b(sample|words)\\b"
-
-# search_binder() is meant to be used in function calls like a grepl() or stringr::str_detect():
-grepl(search_binder(sample_terms), target_text)
-stringr::str_detect(target_text, search_binder(sample_terms))
 
 
 # str_replacer() takes target strings and replaces them with corresponding values
@@ -74,6 +74,7 @@ df_sentences <- dplyr::bind_rows(sentences)
 #> 1 Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years.
 #> 2 He earned $2.5 million when it sold!                         
 #> 3 Now he works at www.website.com. 
+
 
 # search_scripts() finds R scripts in a directory and any subdirectories that contain a search pattern. It really shines with purrr::map_df(). The following example returns a dataframe for any scripts in the test_dir that has the string 'mutate':
 library(dplyr)
