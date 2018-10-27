@@ -75,4 +75,15 @@ df_sentences <- dplyr::bind_rows(sentences)
 #> 2 He earned $2.5 million when it sold!                         
 #> 3 Now he works at www.website.com. 
 
+# search_scripts() finds R scripts in a directory and any subdirectories that contain a search pattern. It really shines with purrr::map_df(). The following example returns a dataframe for any scripts in the test_dir that has the string 'mutate':
+library(dplyr)
+library(purrr)
+
+test_dir <- '~/dir_path/R/Scripts/'
+test_string <- 'mutate'
+
+list.files(test_dir, pattern = '\\.R$', full.names = TRUE, recursive = TRUE) %>% 
+  map_df(~search_scripts(., test_string)) %>% 
+  filter(pattern_count > 0)
+
 ```
