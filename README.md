@@ -40,10 +40,10 @@ search_binder(unique(iris$Species))
 
 # Or a list:
 search_binder(list(sample_terms))
-#> "\\b(sample|words)\\b"
+#> "\\b(multiple|sample|search|terms)\\b"
 
 
-# str_replacer() takes target strings and replaces them with corresponding values
+# str_replacer() takes target strings and replaces them with corresponding values:
 test_string <- 'Jane was born last month on mon jan 1st'
 to_replace = c('mon', 'jan')
 replace_with = c('Monday', 'January')
