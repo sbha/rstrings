@@ -1,8 +1,8 @@
 # rstrings
 ## Overview
-Functions for working with strings in R. 
+Functions for working with strings in R: 
 
-* Easier binding when searching for multiple terms with `search_binder()`
+* Easier word boundary binding when searching for multiple terms with `search_binder()`
 * Easier replacement of multiple values with `str_replacer()`
 * Parse structured text into sentences with `split_into_sentences()`
 * Search R scripts for a string with `search_scripts()`
@@ -17,7 +17,7 @@ devtools::install_github("sbha/rstrings")
 ```r
 library(rstrings)
 
-# search_binder() is meant to be used in function calls like a grepl() or stringr::str_detect():
+# search_binder() is meant to be used in function calls like grepl() or stringr::str_detect() where it may be necessary to search for whole words only for multiple search terms:
 sample_terms = c('multiple', 'sample', 'search', 'terms')
 grepl(search_binder(sample_terms), target_text)
 stringr::str_detect(target_text, search_binder(sample_terms))
