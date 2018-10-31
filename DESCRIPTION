@@ -9,4 +9,7 @@ License: First Amendment
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    stringr
+    stringr,
+    magrittr,
+    dplyr,
+    purrr
