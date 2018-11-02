@@ -17,7 +17,7 @@ devtools::install_github("sbha/rstrings")
 ```r
 library(rstrings)
 
-# search_binder() is meant to be used in function calls like grepl() or stringr::str_detect() where it may be necessary to search for whole words only for multiple search terms:
+# search_binder() is meant to be used in functions like grepl() or stringr::str_detect() where it may be necessary to search for multiple terms that need word boundaries:
 sample_terms = c('multiple', 'sample', 'search', 'terms')
 grepl(search_binder(sample_terms), target_text)
 stringr::str_detect(target_text, search_binder(sample_terms))
@@ -59,8 +59,8 @@ str_replacer(test_string, df$to_replace, df$replace_with)
 
 
 # split_into_sentences() can parse structured text into individual sentences:
-test_text <- 'Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years. He earned $2.5 million when it sold! Now he works at www.website.com.'
-sentences <- split_into_sentences(test_text)
+sample_text <- 'Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years. He earned $2.5 million when it sold! Now he works at www.website.com.'
+sentences <- split_into_sentences(sample_text)
 sentences$sentence
 #> [1] "Dr. John Johnson, Ph.D. worked for X.Y.Z. Inc. for 4.5 years."
 #> [2] "He earned $2.5 million when it sold!"                         
@@ -76,15 +76,16 @@ df_sentences <- dplyr::bind_rows(sentences)
 #> 3 Now he works at www.website.com. 
 
 
-# search_scripts() finds R scripts in a directory and any subdirectories that contain a search pattern. It really shines with purrr::map_df(). The following example returns a dataframe for any scripts in the test_dir that has the string 'mutate':
-library(dplyr)
-library(purrr)
-
-test_dir <- '~/dir_path/R/Scripts/'
+# search_scripts() finds R scripts in a directory and any subdirectories that contain a search pattern. The following example returns a dataframe for any scripts in the test_dir that has the string 'mutate':
+test_dir <- '~dir/path/R/Scripts' # no trailing forward slash
 test_string <- 'mutate'
 
-list.files(test_dir, pattern = '\\.R$', full.names = TRUE, recursive = TRUE) %>% 
-  map_df(~search_scripts(., test_string)) %>% 
-  filter(pattern_count > 0)
+df_scripts <- search_scripts(test_dir, test_string)
+head(df_scripts, 2)
+#> # A tibble: 2 x 3
+#>    directory                                 file_name         pattern_count
+#>    <chr>                                     <chr>                     <int>
+#>  1 ~dir/path/R/Scripts/                      sample_script1.R              2
+#>  2 ~dir/path/R/Scripts/sub_directory         test_script2.R                1
 
 ```
