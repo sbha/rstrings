@@ -12,4 +12,5 @@ Imports:
     stringr,
     magrittr,
     dplyr,
-    purrr
+    purrr,
+    crayon

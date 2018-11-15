@@ -6,6 +6,7 @@ Functions for working with strings in R:
 * Easier replacement of multiple values with `str_replacer()`
 * Parse structured text into sentences with `split_into_sentences()`
 * Search R scripts for a string with `search_scripts()`
+* Simple substring highlighting with `highlighter()`
 
 ## Installation
 ``` r
@@ -88,4 +89,12 @@ head(df_scripts, 2)
 #>  1 ~dir/path/R/Scripts/                      sample_script1.R              2
 #>  2 ~dir/path/R/Scripts/sub_directory         test_script2.R                1
 
+
+# highlighter() prints highlighted substrings in a target string
+test_string <- 'this sample string contains a substring of the target string to be highlighted'
+test_substring <- 'string'
+
+highlighter(test_string, test_substring)
+this sample string contains a substring of the target string to be highlighted
+# note that this example will not render in markdown
 ```
