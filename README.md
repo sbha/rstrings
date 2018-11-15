@@ -78,7 +78,7 @@ df_sentences <- dplyr::bind_rows(sentences)
 
 
 # search_scripts() finds R scripts in a directory and any subdirectories that contain a search pattern. The following example returns a dataframe for any scripts in the test_dir that has the string 'mutate':
-test_dir <- '~dir/path/R/Scripts' # no trailing forward slash
+test_dir <- '~/dir/path/R/Scripts' # no trailing forward slash
 test_string <- 'mutate'
 
 df_scripts <- search_scripts(test_dir, test_string)
@@ -86,15 +86,15 @@ head(df_scripts, 2)
 #> # A tibble: 2 x 3
 #>    directory                                 file_name         pattern_count
 #>    <chr>                                     <chr>                     <int>
-#>  1 ~dir/path/R/Scripts/                      sample_script1.R              2
-#>  2 ~dir/path/R/Scripts/sub_directory         test_script2.R                1
+#>  1 ~/dir/path/R/Scripts/                     sample_script1.R              2
+#>  2 ~/dir/path/R/Scripts/sub_directory        test_script2.R                1
 
 
-# highlighter() prints highlighted substrings in a target string
-test_string <- 'this sample string contains a substring of the target string to be highlighted'
+# highlighter() prints highlighted substrings from a target string in the console:
+test_string <- 'this sample string contains three matching substrings of the target string to be highlighted'
 test_substring <- 'string'
 
 highlighter(test_string, test_substring)
-#> this sample string contains a substring of the target string to be highlighted
-# note that this example will not render in markdown
+#> this sample string contains three matching substrings of the target string to be highlighted
+# note that this example will not display in markdown as it will in the console
 ```
