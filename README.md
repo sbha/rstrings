@@ -95,6 +95,6 @@ test_string <- 'this sample string contains a substring of the target string to 
 test_substring <- 'string'
 
 highlighter(test_string, test_substring)
-this sample string contains a substring of the target string to be highlighted
+#> this sample string contains a substring of the target string to be highlighted
 # note that this example will not render in markdown
 ```
