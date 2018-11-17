@@ -4,9 +4,11 @@ Functions for working with strings in R:
 
 * Easier word boundary binding when searching for multiple terms with `search_binder()`
 * Easier replacement of multiple values with `str_replacer()`
+* Replace numbers with number names or number names with numbers with `number_replacer()`
 * Parse structured text into sentences with `split_into_sentences()`
 * Search R scripts for a string with `search_scripts()`
 * Simple substring highlighting with `highlighter()`
+
 
 ## Installation
 ``` r
