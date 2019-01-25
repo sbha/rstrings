@@ -1,4 +1,4 @@
-#' @title str_combos
+#' @title sub_stringer
 #'
 #' @description Function to replace multiple string combinations
 #'
@@ -8,9 +8,9 @@
 #'
 #' @examples str_replacer
 #'
-#' @export str_combos
+#' @export sub_stringer
 
-str_combos <- function(x, bar = FALSE){
+sub_stringer <- function(x, bar = FALSE){
   a <- NULL
   chars <- nchar(x)
   for (i in 1:chars) {

@@ -99,4 +99,8 @@ test_substring <- 'string'
 highlighter(test_string, test_substring)
 #> this sample string contains three matching substrings of the target string to be highlighted
 # note that this example will not display in markdown as it will in the console
+
+# get all possible sub string combinations of a string with sub_stringer():
+#> str_combos('Russ')
+#[1] "Ru"   "Rus"  "Russ" "us"   "uss"  "ss" 
 ```
