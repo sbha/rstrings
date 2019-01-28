@@ -101,6 +101,6 @@ highlighter(test_string, test_substring)
 # note that this example will not display in markdown as it will in the console
 
 # get all possible sub string combinations of a string with sub_stringer():
-str_combos('Russ')
+sub_stringer('Russ')
 #[1] "Ru"   "Rus"  "Russ" "us"   "uss"  "ss" 
 ```
