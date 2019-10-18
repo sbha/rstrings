@@ -10,7 +10,8 @@
 #'
 #' @export search_scripts
 
-search_scripts <- function(dir_path, search_string, file_ext = '\\.(R|r)$'){
+search_scripts <- function(dir_path, search_string, file_ext = '(R|r)'){
+  file_ext <- paste0('\\.', file_ext, '$')
   search_script <- function(file_name, search_string){
     read_file <- function(file_name){
       con <- file(file_name, open="r")
@@ -22,8 +23,9 @@ search_scripts <- function(dir_path, search_string, file_ext = '\\.(R|r)$'){
     check_string <- function(file_name, search_string){
       file <- read_file(file_name)
       cnt <- length(grep(search_string, file))
-      dir_path <- gsub('(^.+/)(.+\\.R$)', '\\1', file_name)
-      file_name <- gsub('(^.+/)(.+\\.R$)', '\\2', file_name)
+      file_pattern <- paste0('(^.+/)(.+', file_ext,')')
+      dir_path <- gsub(file_pattern, '\\1', file_name)
+      file_name <- gsub(file_pattern, '\\2', file_name)
       df <- data.frame(directory = dir_path, file_name = file_name, pattern_count = cnt, stringsAsFactors = FALSE)
       df
     }
