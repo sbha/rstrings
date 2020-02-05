@@ -1,8 +1,10 @@
+export(clean_text)
+export(highlighter)
+export(number_replacer)
 export(search_binder)
 export(split_into_sentences)
 export(str_replacer)
 export(search_scripts)
-export(highlighter)
-export(number_replacer)
 export(sub_stringer)
+
 importFrom(magrittr,"%>%")
