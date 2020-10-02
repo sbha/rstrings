@@ -1,4 +1,4 @@
-export(clean_text)
+export(clean_str)
 export(highlighter)
 export(number_replacer)
 export(search_binder)
