@@ -10,7 +10,7 @@
 #'
 #' @export search_scripts
 
-search_scripts <- function(dir_path, search_string, file_ext = '(R|r)'){
+search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)'){
   file_ext <- paste0('\\.', file_ext, '$')
   search_script <- function(file_name, search_string){
     read_file <- function(file_name){
