@@ -8,6 +8,7 @@ export(search_scripts)
 export(sub_stringer)
 
 importFrom(magrittr,"%>%")
+importFrom(crayon,red)
 importFrom(dplyr,filter)
 importFrom(purrr,map_df)
 importFrom(stringr,str_detect)
