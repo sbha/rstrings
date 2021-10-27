@@ -37,9 +37,9 @@ search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)'
   
   # aggregate all scripts in directory
   df_out <- list.files(dir_path, pattern = file_ext, full.names = TRUE, recursive = TRUE) %>%
-    purrr::map_df(~search_script(., search_string)) %>%
-    dplyr::filter(pattern_count > 0) %>%
-    dplyr::tbl_df()
+    map_df(~search_script(., search_string)) %>%
+    filter(pattern_count > 0) %>%
+    as_tibble()
   
   return(df_out)
   

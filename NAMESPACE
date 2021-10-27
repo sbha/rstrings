@@ -8,3 +8,6 @@ export(search_scripts)
 export(sub_stringer)
 
 importFrom(magrittr,"%>%")
+importFrom(dplyr,filter)
+importFrom(purrr,map_df)
+importFrom(tidyr,as_tibble)
