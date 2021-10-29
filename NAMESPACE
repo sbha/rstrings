@@ -1,6 +1,7 @@
 export(clean_str)
 export(highlighter)
 export(number_replacer)
+export(reverse_string)
 export(search_binder)
 export(split_into_sentences)
 export(str_replacer)
