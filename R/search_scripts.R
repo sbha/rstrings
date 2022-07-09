@@ -39,6 +39,7 @@ search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)'
   df_out <- list.files(dir_path, pattern = file_ext, full.names = TRUE, recursive = TRUE) %>%
     map_df(~search_script(., search_string)) %>%
     filter(pattern_count > 0) %>%
+    mutate(last_modified = file.info(paste0(directory, file_name))$ctime) %>% 
     as_tibble()
   
   return(df_out)
