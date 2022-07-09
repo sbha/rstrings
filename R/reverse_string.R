@@ -4,3 +4,7 @@ reverse_string <- function(x){
   gsub('\\s+', ' ', s)
 }
 
+#stringr::str_remove_all(paste(rev(strsplit(stringr::str_to_lower(slogan), '\\s')[[1]]), collapse = ' '), '\\.')
+
+
+

@@ -2,7 +2,7 @@
 #'
 #' @description Wrapper of str_replacer() to convert numbers to number names or number names to numbers in strings
 #'
-#' @param str_target, number_name
+#' @param x, number_name
 #'
 #' @return number_out
 #'
