@@ -10,7 +10,7 @@
 #'
 #' @export search_scripts
 
-search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)'){
+search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)', sort = TRUE){
   file_ext <- paste0('\\.', file_ext, '$')
   search_script <- function(file_name, search_string){
     read_file <- function(file_name){
@@ -42,6 +42,15 @@ search_scripts <- function(search_string, dir_path = getwd(), file_ext = '(R|r)'
     mutate(last_modified = file.info(paste0(directory, file_name))$ctime) %>% 
     as_tibble()
   
-  return(df_out)
-  
+  if (sort == TRUE){
+    df_sort <- df_out %>%
+      arrange(desc(last_modified))
+
+    return(df_sort)
+
+  } else {
+
+    return(df_out)
+  }
+
 }
