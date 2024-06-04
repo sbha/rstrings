@@ -25,7 +25,7 @@ count_syllables <- function(word){
   
   
   # See http://eayd.in/?p=232
-  exception_add = c("serious", "crucial")
+  exception_add = c("serious", "crucial") # rodeo
   exception_del = c("fortunately", "unfortunately")
   
   co_one = c("cool", "coach", "coat", "coal", "count", "coin", "coarse", "coup", "coif", "cook", "coign", "coiffe", "coof", "court")
@@ -37,109 +37,114 @@ count_syllables <- function(word){
   disc = 0 # Discarded syllable number
   
   # 1) if letters < 3: return 1
-  if (nchar(word) <= 3) syls = 1
-  
-  #return(syls)
-  
-  # 2) if doesn't end with "ted" or "tes" or "ses" or "ied" or "ies", discard "es" and "ed" at the end.
-  # if it has only 1 vowel or 1 set of consecutive vowels, discard. (like "speed", "fled" etc.)
-  if (chars_last2 == "es" | chars_last2 == "ed"){
-    double_and_triple_1 = str_count(word, '[eaoui][eaoui]')
+  if (nchar(word) <= 3){
     
-    if (double_and_triple_1 > 1 | str_count(word, '[eaoui][^eaoui]') > 1)  {
-      if (chars_last3 == "ted" | chars_last3 == "tes" | chars_last3  == "ses" | chars_last3  == "ied" |chars_last3 == "ies"){
+    syls = 1
+    
+    return(syls)
+    
+  } else {
+    
+    # 2) if doesn't end with "ted" or "tes" or "ses" or "ied" or "ies", discard "es" and "ed" at the end.
+    # if it has only 1 vowel or 1 set of consecutive vowels, discard. (like "speed", "fled" etc.)
+    if (chars_last2 == "es" | chars_last2 == "ed"){
+      double_and_triple_1 = str_count(word, '[eaoui][eaoui]')
+      
+      if (double_and_triple_1 > 1 | str_count(word, '[eaoui][^eaoui]') > 1)  {
+        if (chars_last3 == "ted" | chars_last3 == "tes" | chars_last3  == "ses" | chars_last3  == "ied" |chars_last3 == "ies"){
+          #pass
+        } else {
+          disc = disc + 1
+        }
+      }
+    }
+    
+    # 3) discard trailing "e", except where ending is "le"
+    le_except = c("whole", "mobile", "pole", "male", "female", "hale", "pale", "tale", "sale", "aisle", "whale", "while")
+    
+    if (chars_last1 == "e"){
+      if (chars_last2 == "le" & !(word %in% le_except)){
         #pass
       } else {
         disc = disc + 1
+      } 
+    }
+    
+    # 4) check if consecutive vowels exists, triplets or pairs, count them as one.
+    double_and_triple = str_count(word, '[eaoui][eaoui]')
+    tripple = str_count(word, '[eaoui][eaoui][eaoui]')
+    disc = disc + double_and_triple + tripple
+    
+    # 5) count remaining vowels in word.
+    num_vowels = str_count(word, '[eaoui]')
+    
+    # 6) add one if starts with "mc"
+    if (chars_first2 == "mc") syls = syls + 1
+    
+    # 7) add one if ends with "y" but is not surrouned by vowel
+    if (chars_last1 == "y" & (!chars_last2 %in% vowels)) syls = syls + 1
+    
+    # 8) add one if "y" is surrounded by non-vowels and is not in the last word.
+    # not ready to port yet - need to figure out python enumerate 
+    
+    # 9) if starts with "tri-" or "bi-" and is followed by a vowel, add one.
+    if (chars_first3 == "tri" & chars_4 %in% vowels) syls = syls + 1
+    
+    if (chars_first2 == "bi" & chars_3 %in% vowels) syls = syls + 1
+    
+    # 10) if ends with "-ian", should be counted as two syllables, except for "-tian" and "-cian"
+    if (chars_last3 == "ian"){
+      # and (word[-4:] != "cian" or word[-4:] != "tian"):
+      if (chars_last4 == "cian" | chars_last4 == "tian"){
+        #pass
+      } else {
+        syls = syls + 1
+      } 
+    }
+    
+    # 11) if starts with "co-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
+    if (chars_first2 == "co" & chars_3 %in% vowels){
+      if (chars_first4 %in% co_two | chars_first5 %in% co_two | chars_first6 %in% co_two){
+        syls = syls + 1
+      } else if (chars_first4 %in% co_one | chars_first5 %in% co_one | chars_first6 %in% co_one){
+        #pass
+      } else {
+        syls = syls + 1
+      }
+      
+    }
+    
+    # 12) if starts with "pre-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
+    if (chars_first3 == "pre" & chars_4 %in% vowels){
+      if (chars_first6 %in% pre_one){
+        # pass
+      } else {
+        syls = syls + 1
+      }
+      
+    }
+    
+    # 13) check for "-n't" and cross match with dictionary to add syllable.
+    negative = c("doesn't", "isn't", "shouldn't", "couldn't", "wouldn't", "doesn’t", "isn’t", "shouldn’t", "couldn’t", "wouldn’t")
+    
+    if (chars_last3 == "n't" | chars_last3 == "n’t"){
+      if (word %in% negative){
+        syls = syls + 1
+      } else {
+        # pass
       }
     }
-  }
-  
-  # 3) discard trailing "e", except where ending is "le"
-  le_except = c("whole", "mobile", "pole", "male", "female", "hale", "pale", "tale", "sale", "aisle", "whale", "while")
-  
-  if (chars_last1 == "e"){
-    if (chars_last2 == "le" & !(word %in% le_except)){
-      #pass
-    } else {
-      disc = disc + 1
-    } 
-  }
-  
-  # 4) check if consecutive vowels exists, triplets or pairs, count them as one.
-  double_and_triple = str_count(word, '[eaoui][eaoui]')
-  tripple = str_count(word, '[eaoui][eaoui][eaoui]')
-  disc = disc + double_and_triple + tripple
-  
-  # 5) count remaining vowels in word.
-  num_vowels = str_count(word, '[eaoui]')
-  
-  # 6) add one if starts with "mc"
-  if (chars_first2 == "mc") syls = syls + 1
-  
-  # 7) add one if ends with "y" but is not surrouned by vowel
-  if (chars_last1 == "y" & (!chars_last2 %in% vowels)) syls = syls + 1
-  
-  # 8) add one if "y" is surrounded by non-vowels and is not in the last word.
-  # not ready to port yet - need to figure out python enumerate 
-  
-  # 9) if starts with "tri-" or "bi-" and is followed by a vowel, add one.
-  if (chars_first3 == "tri" & chars_4 %in% vowels) syls = syls + 1
-  
-  if (chars_first2 == "bi" & chars_3 %in% vowels) syls = syls + 1
-  
-  # 10) if ends with "-ian", should be counted as two syllables, except for "-tian" and "-cian"
-  if (chars_last3 == "ian"){
-    # and (word[-4:] != "cian" or word[-4:] != "tian"):
-    if (chars_last4 == "cian" | chars_last4 == "tian"){
-      #pass
-    } else {
-      syls = syls + 1
-    } 
-  }
-  
-  # 11) if starts with "co-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
-  if (chars_first2 == "co" & chars_3 %in% vowels){
-    if (chars_first4 %in% co_two | chars_first5 %in% co_two | chars_first6 %in% co_two){
-      syls = syls + 1
-    } else if (chars_first4 %in% co_one | chars_first5 %in% co_one | chars_first6 %in% co_one){
-      #pass
-    } else {
-      syls = syls + 1
-    }
-  
-  }
     
-  # 12) if starts with "pre-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
-  if (chars_first3 == "pre" & chars_4 %in% vowels){
-    if (chars_first6 %in% pre_one){
-      # pass
-    } else {
-      syls = syls + 1
-    }
-      
+    # # 14) Handling the exceptional words.
+    if (word %in% exception_del) disc <- disc + 1
+    
+    if (word %in% exception_add) syls = syls + 1
+    
+    # Calculate the output
+    return(num_vowels - disc + syls)
+    
   }
-    
-  # 13) check for "-n't" and cross match with dictionary to add syllable.
-  negative = c("doesn't", "isn't", "shouldn't", "couldn't", "wouldn't", "doesn’t", "isn’t", "shouldn’t", "couldn’t", "wouldn’t")
-  
-  if (chars_last3 == "n't" | chars_last3 == "n’t"){
-    if (word %in% negative){
-      syls = syls + 1
-    } else {
-      # pass
-    }
-  }
-  
-  # # 14) Handling the exceptional words.
-  if (word %in% exception_del) disc <- disc + 1
-    
-  if (word %in% exception_add) syls = syls + 1
-    
-  # Calculate the output
-  return(num_vowels - disc + syls)
-  
-    
+
 }
 
 # test_word <- 'stuart'
