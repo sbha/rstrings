@@ -25,7 +25,9 @@ count_syllables <- function(word){
   
   
   # See http://eayd.in/?p=232
-  exception_add = c("serious", "crucial") # rodeo
+  exception_add = c("serious", "crucial")
+  exception_stu = c("rodeo")
+  exception_add = c(exception_add, exception_stu)
   exception_del = c("fortunately", "unfortunately")
   
   co_one = c("cool", "coach", "coat", "coal", "count", "coin", "coarse", "coup", "coif", "cook", "coign", "coiffe", "coof", "court")
