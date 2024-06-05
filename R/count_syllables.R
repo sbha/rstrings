@@ -179,6 +179,25 @@ count_syllables <- function(word){
 
 }
 
+
+# wrapper function returning word and syllable count as a data frame.
+# handy when mapping across multiple words
+
+count_syllables_df <- function(word){
+  
+  tibble(
+    word = word,
+    syllable_count = rstrings::count_syllables(word)
+  )
+  
+}
+
+# ts <- 'text string with multiple sylables'
+# 
+# ts %>% 
+#   str_split_1('\\s+') %>% 
+#   map_df(count_syllables_df)
+
 # test_word <- 'stuart'
 # test_word <- 'inhabitant'
 # 

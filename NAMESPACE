@@ -1,5 +1,6 @@
 export(clean_str)
 export(count_syllables)
+export(count_syllables_df)
 export(highlighter)
 export(number_replacer)
 export(reverse_string)
