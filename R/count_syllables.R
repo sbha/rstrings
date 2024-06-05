@@ -26,7 +26,7 @@ count_syllables <- function(word){
   
   # See http://eayd.in/?p=232
   exception_add = c("serious", "crucial")
-  exception_stu = c("rodeo")
+  exception_stu = c("rodeo", "hierarchical", "hierarchy")
   exception_add = c(exception_add, exception_stu)
   exception_del = c("fortunately", "unfortunately")
   
@@ -88,6 +88,19 @@ count_syllables <- function(word){
     
     # 8) add one if "y" is surrounded by non-vowels and is not in the last word.
     # not ready to port yet - need to figure out python enumerate 
+    rey <-'[b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]'
+    
+    syls_y <- str_split(word, '') %>% 
+      unlist() %>% 
+      enframe() %>% 
+      filter(!(value == 'y' & row_number() == max(row_number()))) %>% 
+      mutate(leading = lead(value)) %>% 
+      mutate(lagging = lag(value)) %>% 
+      unite(value, leading, value, lagging, sep = '', na.rm = TRUE) %>% 
+      filter(str_detect(value, rey)) %>% 
+      nrow()
+    
+    syls <- syls + syls_y
     
     # 9) if starts with "tri-" or "bi-" and is followed by a vowel, add one.
     if (chars_first3 == "tri" & chars_4 %in% vowels) syls = syls + 1
@@ -175,4 +188,19 @@ count_syllables <- function(word){
 #   zip(ix=seq_along(..1), ...)
 # }
 # 
+
+# re <- paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')')
+# re <- '[b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]'
 # 
+# #str_count(tw, paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')'))
+# str_count(tw, re)
+
+# monosyllable 
+# polysyllable
+# hierarchical
+
+
+
+
+
+
