@@ -4,7 +4,6 @@
 
 count_syllables <- function(word){
   
-  
   chars_first2 <- str_sub(word, 1,2)
   chars_first3 <- str_sub(word, 1,3)
   chars_first4 <- str_sub(word, 1,4)
@@ -23,8 +22,7 @@ count_syllables <- function(word){
   vowels <- c('a', 'e', 'i', 'o', 'u')
   consonants <- letters[!letters %in% vowels]
   
-  
-  # See http://eayd.in/?p=232
+    # See http://eayd.in/?p=232
   exception_add = c("serious", "crucial")
   exception_stu = c("rodeo", "hierarchical", "hierarchy")
   exception_add = c(exception_add, exception_stu)
@@ -65,10 +63,13 @@ count_syllables <- function(word){
     le_except = c("whole", "mobile", "pole", "male", "female", "hale", "pale", "tale", "sale", "aisle", "whale", "while")
     
     if (chars_last1 == "e"){
+      
       if (chars_last2 == "le" & !(word %in% le_except)){
         #pass
       } else {
+        
         disc = disc + 1
+        
       } 
     }
     
@@ -113,28 +114,38 @@ count_syllables <- function(word){
       if (chars_last4 == "cian" | chars_last4 == "tian"){
         #pass
       } else {
+        
         syls = syls + 1
+        
       } 
     }
     
     # 11) if starts with "co-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
     if (chars_first2 == "co" & chars_3 %in% vowels){
+      
       if (chars_first4 %in% co_two | chars_first5 %in% co_two | chars_first6 %in% co_two){
+        
         syls = syls + 1
+        
       } else if (chars_first4 %in% co_one | chars_first5 %in% co_one | chars_first6 %in% co_one){
         #pass
       } else {
+        
         syls = syls + 1
+        
       }
       
     }
     
     # 12) if starts with "pre-" and is followed by a vowel, check if exists in the double syllable dictionary, if not, check if in single dictionary and act accordingly.
     if (chars_first3 == "pre" & chars_4 %in% vowels){
+      
       if (chars_first6 %in% pre_one){
         # pass
       } else {
+        
         syls = syls + 1
+        
       }
       
     }
@@ -143,8 +154,11 @@ count_syllables <- function(word){
     negative = c("doesn't", "isn't", "shouldn't", "couldn't", "wouldn't", "doesn’t", "isn’t", "shouldn’t", "couldn’t", "wouldn’t")
     
     if (chars_last3 == "n't" | chars_last3 == "n’t"){
+      
       if (word %in% negative){
+        
         syls = syls + 1
+        
       } else {
         # pass
       }
