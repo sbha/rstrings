@@ -102,7 +102,10 @@ count_syllables <- function(word){
     #   unite(value, leading, value, lagging, sep = '', na.rm = TRUE) %>% 
     #   filter(str_detect(value, rey)) %>% 
     #   nrow()
-    syls_y = length(stri_match_all_regex(word, '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2])
+    
+    ycons <- stri_match_all_regex(word, '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2]
+    
+    syls_y = length(ycons[!is.na(ycons)])
     
     syls = syls + syls_y
     
@@ -198,16 +201,9 @@ count_syllables_df <- function(word){
 #   str_split_1('\\s+') %>% 
 #   map_df(count_syllables_df)
 
-# test_word <- 'stuart'
 # test_word <- 'inhabitant'
-# 
-# get_syllable_count(test_word)
-# 
-# test_word <- 'stuart'
-# test_word <- 'stuartheart'
 # test_word <- 'tertiary'
 # test_word <- 'consciousness'
-# test_word <- 'constantinople'
 # 
 # str_sub(test_word, start= -2)
 # str_count(test_word, '[eaoui][^eaoui]')
@@ -230,14 +226,23 @@ count_syllables_df <- function(word){
 # 
 # #str_count(tw, paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')'))
 # str_count(tw, re)
-# 
-# # monosyllable 
-# # polysyllable
-# # hierarchical
-# 
-# 
+
 # 
 # 
 # stringi::stri_match_all_regex('ACCACCACCAC', '(?=([AC]C))')[[1]][,2]
 # length(stringi::stri_match_all_regex('polysyllable', '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2])
 # 
+
+# tw <- 
+# c('adore',
+#   'consciousness',
+#   'count',
+#   'heart',
+#   'hierarchical',
+#   'inhabitant',
+#   'monosyllable',
+#   'polysyllable',
+#   'rodeo',
+#   'tertiary'
+# ) 
+# purrr::map_df(tw, count_syllables_df)
