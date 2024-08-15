@@ -48,9 +48,11 @@ count_syllables <- function(word){
     # 2) if doesn't end with "ted" or "tes" or "ses" or "ied" or "ies", discard "es" and "ed" at the end.
     # if it has only 1 vowel or 1 set of consecutive vowels, discard. (like "speed", "fled" etc.)
     if (chars_last2 == "es" | chars_last2 == "ed"){
+      
       double_and_triple_1 = str_count(word, '[eaoui][eaoui]')
       
       if (double_and_triple_1 > 1 | str_count(word, '[eaoui][^eaoui]') > 1)  {
+        
         if (chars_last3 == "ted" | chars_last3 == "tes" | chars_last3  == "ses" | chars_last3  == "ied" |chars_last3 == "ies"){
           #pass
         } else {
@@ -89,19 +91,23 @@ count_syllables <- function(word){
     
     # 8) add one if "y" is surrounded by non-vowels and is not in the last word.
     # not ready to port yet - need to figure out python enumerate 
-    rey <-'[b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]'
+    # rey <-'[b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]'
+    # 
+    # syls_y <- str_split(word, '') %>% 
+    #   unlist() %>% 
+    #   enframe() %>% 
+    #   filter(!(value == 'y' & row_number() == max(row_number()))) %>% 
+    #   mutate(leading = lead(value)) %>% 
+    #   mutate(lagging = lag(value)) %>% 
+    #   unite(value, leading, value, lagging, sep = '', na.rm = TRUE) %>% 
+    #   filter(str_detect(value, rey)) %>% 
+    #   nrow()
     
-    syls_y <- str_split(word, '') %>% 
-      unlist() %>% 
-      enframe() %>% 
-      filter(!(value == 'y' & row_number() == max(row_number()))) %>% 
-      mutate(leading = lead(value)) %>% 
-      mutate(lagging = lag(value)) %>% 
-      unite(value, leading, value, lagging, sep = '', na.rm = TRUE) %>% 
-      filter(str_detect(value, rey)) %>% 
-      nrow()
+    ycons <- stri_match_all_regex(word, '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2]
     
-    syls <- syls + syls_y
+    syls_y = length(ycons[!is.na(ycons)])
+    
+    syls = syls + syls_y
     
     # 9) if starts with "tri-" or "bi-" and is followed by a vowel, add one.
     if (chars_first3 == "tri" & chars_4 %in% vowels) syls = syls + 1
@@ -176,16 +182,28 @@ count_syllables <- function(word){
 
 }
 
-# test_word <- 'stuart'
+
+# wrapper function returning word and syllable count as a data frame.
+# handy when mapping across multiple words
+
+count_syllables_df <- function(word){
+  
+  tibble(
+    word = word,
+    syllable_count = rstrings::count_syllables(word)
+  )
+  
+}
+
+# ts <- 'text string with multiple sylables'
+# 
+# ts %>% 
+#   str_split_1('\\s+') %>% 
+#   map_df(count_syllables_df)
+
 # test_word <- 'inhabitant'
-# 
-# get_syllable_count(test_word)
-# 
-# test_word <- 'stuart'
-# test_word <- 'stuartheart'
 # test_word <- 'tertiary'
 # test_word <- 'consciousness'
-# test_word <- 'constantinople'
 # 
 # str_sub(test_word, start= -2)
 # str_count(test_word, '[eaoui][^eaoui]')
@@ -203,18 +221,28 @@ count_syllables <- function(word){
 # }
 # 
 
-# re <- paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')')
+#re <- paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')')
 # re <- '[b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]'
 # 
 # #str_count(tw, paste0('(', paste(consonants, collapse = '|'), ')y(', paste(consonants, collapse = '|'), ')'))
 # str_count(tw, re)
 
-# monosyllable 
-# polysyllable
-# hierarchical
+# 
+# 
+# stringi::stri_match_all_regex('ACCACCACCAC', '(?=([AC]C))')[[1]][,2]
+# length(stringi::stri_match_all_regex('polysyllable', '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2])
+# 
 
-
-
-
-
-
+# tw <- 
+# c('adore',
+#   'consciousness',
+#   'count',
+#   'heart',
+#   'hierarchical',
+#   'inhabitant',
+#   'monosyllable',
+#   'polysyllable',
+#   'rodeo',
+#   'tertiary'
+# ) 
+# purrr::map_df(tw, count_syllables_df)
