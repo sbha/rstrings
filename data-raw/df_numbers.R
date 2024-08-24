@@ -45,3 +45,4 @@ df_numbers <- data.frame(number_name = number_names,
 #dir.create('./data/')
 #save(df_numbers,file="./data/df_numbers.Rda")
 
+usethis::use_data(df_numbers, overwrite = TRUE)

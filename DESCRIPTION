@@ -14,3 +14,5 @@ Imports:
     dplyr,
     purrr,
     crayon
+Depends: 
+    R (>= 2.10)
