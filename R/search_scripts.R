@@ -15,7 +15,8 @@ search_scripts <- function(search_string,
                            file_ext = '(R|r)', 
                            sort = TRUE, 
                            search_string2 = NULL,
-                           string2_in_both = TRUE){
+                           string2_in_both = TRUE,
+                           file_name_only = FALSE){
   
   file_ext <- paste0('\\.', file_ext, '$')
   
@@ -55,9 +56,17 @@ search_scripts <- function(search_string,
       df_sort <- df_out %>%
         arrange(desc(last_modified))
       
+      if (file_name_only){
+        df_sort <- df_sort %>% select(file_name)
+      }
+      
       return(df_sort)
       
     } else {
+      
+      if (file_name_only){
+        df_out <- df_out %>% select(file_name)
+      }
       
       return(df_out)
     }
@@ -66,6 +75,7 @@ search_scripts <- function(search_string,
     
     # included in both
     if (string2_in_both == TRUE){
+      
       search_scripts(search_string) %>% 
         inner_join(search_scripts(search_string2),
                    by = c('directory', 'file_name', 'last_modified'),
