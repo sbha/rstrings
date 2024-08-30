@@ -233,16 +233,19 @@ count_syllables_df <- function(word){
 # length(stringi::stri_match_all_regex('polysyllable', '(?=([b-df-hj-np-tv-z]y[b-df-hj-np-tv-z]))')[[1]][,2])
 # 
 
-# tw <- 
+# tw <-
 # c('adore',
 #   'consciousness',
 #   'count',
 #   'heart',
 #   'hierarchical',
+#   'hierarchy',
 #   'inhabitant',
 #   'monosyllable',
 #   'polysyllable',
 #   'rodeo',
-#   'tertiary'
-# ) 
+#   'tertiary',
+#   'unite',
+#   'unity
+# )
 # purrr::map_df(tw, count_syllables_df)
