@@ -1,6 +1,7 @@
 export(clean_str)
 export(count_syllables)
 export(count_syllables_df)
+export(get_ngrams)
 export(highlighter)
 export(number_replacer)
 export(replace_multi_linebreaks)
