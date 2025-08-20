@@ -1,10 +1,10 @@
 # '<.*?>'
 
 remove_html_tags <- function(x, 
-                        replace_with = ' ', 
-                        trim = TRUE,
-                        squish = TRUE,
-                        re_tags = '<[^>]*>'){
+                             replace_with = ' ', 
+                             trim = TRUE,
+                             squish = TRUE,
+                             re_tags = '<[^>]*>'){
   
   cs <- str_replace_all(x, re_tags, replace_with)
   
@@ -16,6 +16,6 @@ remove_html_tags <- function(x,
     cs <- str_squish(cs)
   } 
   
-  cs
+  return(cs)
   
 }
